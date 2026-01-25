@@ -1,0 +1,543 @@
+// ProductGrid.module.scss
+// Variáveis com cores exatas
+$primary-color: #FF8310;
+$primary-color-light: #FF8310;
+$text-primary: #FFFFFF;
+$text-secondary: #B0B0B0;
+$text-light: #888888;
+$bg-container: #191A20;
+$bg-image: #22232C;
+$border-color: #333333;
+$shadow-color: rgba(0, 0, 0, 0.5);
+
+// Breakpoints
+$breakpoints: (
+  xs: 480px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+.container {
+  padding: 60px 10px; //100px
+  max-width: 1455px;
+  margin: 0 auto;
+  
+  @media (max-width: map-get($breakpoints, xl)) {
+    max-width: 1140px;
+    padding: 50px 20px;
+  }
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    max-width: 960px;
+    padding: 40px 20px;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    max-width: 720px;
+    padding: 30px 15px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    max-width: 540px;
+    padding: 25px 12px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    padding: 20px 10px;
+  }
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  text-align: left;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    font-size: 1.75rem;
+    text-align: center;
+    padding-left: 0;
+    margin-bottom: 25px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    font-size: 1.375rem;
+    margin-bottom: 16px;
+  }
+}
+
+.productGrid {
+  display: grid;
+  gap: 25px;
+  justify-content: center;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    gap: 20px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    gap: 16px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    gap: 12px;
+  }
+}
+
+// Responsive columns
+.columns4 {
+  grid-template-columns: 1fr;
+  
+  @media (min-width: map-get($breakpoints, sm)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: map-get($breakpoints, lg)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (min-width: map-get($breakpoints, xl)) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.columns3 {
+  grid-template-columns: 1fr;
+  
+  @media (min-width: map-get($breakpoints, sm)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: map-get($breakpoints, lg)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.columns2 {
+  grid-template-columns: 1fr;
+  
+  @media (min-width: map-get($breakpoints, sm)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.productCard {
+  background: $bg-container;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 100%;
+  width: 100%;
+  
+  @media (min-width: map-get($breakpoints, xl)) {
+    max-width: 345px;
+  }
+  
+  // Efeito hover simplificado - SEM ZOOM
+  &:hover {
+    border-color: rgba($primary-color, 0.5);
+    box-shadow: 0 8px 24px $shadow-color;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    border-radius: 6px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    border-radius: 4px;
+  }
+}
+
+.imageBackground {
+  background-color: $bg-container;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 258px;
+  margin: 6px;
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    padding: 15px;
+    min-height: 240px;
+    margin: 5px;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: 12px;
+    min-height: 220px;
+    margin: 4px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: 10px;
+    min-height: 200px;
+    margin: 3px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    padding: 8px;
+    min-height: 180px;
+    margin: 2px;
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+  background-color: $bg-image;
+  
+  // REMOVIDO o transform: scale(1.05) no hover
+  .productImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    // Transição removida para evitar qualquer efeito de zoom
+  }
+  
+  // REMOVIDO o hover que causava zoom
+  // &:hover .productImage {
+  //   transform: scale(1.05);
+  // }
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    height: 220px;
+    border-radius: 6px;
+    
+    .productImage {
+      padding: 8px;
+    }
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    height: 200px;
+    border-radius: 5px;
+    
+    .productImage {
+      padding: 6px;
+    }
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    height: 180px;
+    border-radius: 4px;
+    
+    .productImage {
+      padding: 5px;
+    }
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    height: 160px;
+    border-radius: 3px;
+    
+    .productImage {
+      padding: 4px;
+    }
+  }
+}
+
+.contentContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: $bg-container;
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    padding: 16px;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: 14px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: 12px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    padding: 10px;
+  }
+}
+
+.productTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: $text-primary;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    font-size: 15px;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    font-size: 13px;
+    letter-spacing: 0.2px;
+  }
+}
+
+.productDescription {
+  color: $text-secondary;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  flex-grow: 1;
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  display: block;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    margin-bottom: 14px;
+    font-size: 11px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    margin-bottom: 12px;
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    margin-bottom: 10px;
+    font-size: 10px;
+  }
+}
+
+// No seu arquivo de estilos (ex: ProductGrid.module.scss)
+.priceContainer {
+  margin-bottom: 16px;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    margin-bottom: 14px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    margin-bottom: 12px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    margin-bottom: 10px;
+  }
+}
+
+.priceWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px; // Aumentei de 6px para 8px
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    gap: 7px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    gap: 6px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    gap: 5px;
+  }
+}
+
+.ethIcon {
+  width: 29px; // Aumentado de 16px
+  height: 29px; // Aumentado de 16px
+  display: block;
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    width: 18px; // Aumentado de 14px
+    height: 18px; // Aumentado de 14px
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    width: 16px; // Aumentado de 12px
+    height: 16px; // Aumentado de 12px
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    width: 15px; // Aumentado de 11px
+    height: 15px; // Aumentado de 11px
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    width: 14px; // Aumentado de 10px
+    height: 14px; // Aumentado de 10px
+  }
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 500;
+  color: $text-primary;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    font-size: 1.375rem;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    font-size: 1.25rem;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    font-size: 1.125rem;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    font-size: 1rem;
+  }
+}
+
+.buyButton {
+  background: $primary-color;
+  border: none;
+  color: white;
+  padding: 26px 20px; // 28px 20px
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  &:hover {
+    background: $primary-color-light;
+    // REMOVIDO transform: translateY(-2px) para evitar "movimento"
+    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+  }
+  
+  // REMOVIDO :active que causava movimento
+  // &:active {
+  //   transform: translateY(0);
+  // }
+  
+  @media (max-width: map-get($breakpoints, lg)) {
+    padding: 18px 20px;
+    font-size: 15px;
+    border-radius: 6px;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: 16px 18px;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-radius: 5px;
+  }
+  
+  @media (max-width: map-get($breakpoints, xs)) {
+    padding: 12px 14px;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    border-radius: 4px;
+    gap: 6px;
+  }
+}
+
+.buttonText {
+  font-weight: 600;
+}
+
+// REMOVIDA a seção de orientação landscape que continha overflow hidden
+
+// Suporte para telas muito grandes (4K)
+@media (min-width: 2000px) {
+  .container {
+    max-width: 1800px;
+    padding: 80px 20px;
+  }
+  
+  .productGrid {
+    gap: 35px;
+  }
+  
+  .productCard {
+    max-width: 400px;
+  }
+  
+  .imageBackground {
+    min-height: 300px;
+    padding: 25px;
+  }
+  
+  .imageContainer {
+    height: 280px;
+  }
+  
+  .productTitle {
+    font-size: 20px;
+  }
+  
+  .productDescription {
+    font-size: 14px;
+  }
+  
+  .price {
+    font-size: 1.75rem;
+    
+    &::before {
+      font-size: 0.875rem;
+    }
+  }
+  
+  .buyButton {
+    padding: 24px 28px;
+    font-size: 18px;
+  }
+}

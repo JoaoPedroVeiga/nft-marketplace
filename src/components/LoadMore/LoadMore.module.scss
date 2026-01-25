@@ -1,0 +1,47 @@
+// components/LoadMore/LoadMore.module.scss
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 350px; // Largura aproximada da imagem que você enviou
+  margin: 60px auto; // 60px de espaço no topo/fundo e centraliza nas laterais
+  padding: 20px;
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 6px;
+  background-color: #333;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: #ff8c00;
+}
+
+.button {
+  width: 100%;
+  padding: 16px;
+  background-color: #333;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #444;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+    color: #999; // Cor de texto mais apagada quando "já viu tudo"
+  }
+}

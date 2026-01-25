@@ -1,0 +1,42 @@
+// Definindo a cor como variável
+$dark-color: #232323;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+// Reset de margin/padding para todos os elementos
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $dark-color;
+  color: lighten($dark-color, 70%);
+  font-family:
+    "Poppins",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    sans-serif;
+  min-height: 100vh;
+}
+
+// Classe principal para o conteúdo - usa variável CSS
+.main-content {
+  padding-top: var(
+    --header-height,
+    100px
+  ); // 🔴 Usa variável do header, fallback 100px
+  min-height: 100vh;
+}
+
+// Para componentes específicos
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

@@ -1,0 +1,256 @@
+// Variáveis de design system - ADICIONE ESTA LINHA NO TOPO
+$dark-color: #232323; // 🔴 Adicionado aqui
+
+:root {
+  --primary-color: #4F46E5;
+  --accent-color: #EF4444;
+  --text-primary: #1F2937;
+  --text-primary-dark: #F9FAFB;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --header-height: 100px; // 🔴 Variável para altura do header
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height); // 🔴 Usando variável
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  background-color: rgba($dark-color, 0.9); // 🔴 Agora funciona!
+
+  &Container {
+    width: 100%;
+    max-width: 1800px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+}
+
+// Logo Container
+.logoContainer {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  .logoLink {
+    display: block;
+    transition: opacity 0.3s ease;
+
+    &:hover { opacity: 0.8; }
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+  }
+
+  .logo {
+    width: 101px;
+    height: 38px;
+    object-fit: contain;
+  }
+}
+
+// Bag Container
+.bagContainer {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  .bagContent {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cartCount {
+    color: white;
+    font-size: 20px;
+    min-width: 20px;
+    height: 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    letter-spacing: -0.5px;
+    padding-bottom: 2px;
+    margin-bottom: -2px;
+  }
+
+  .bagButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgba(79, 70, 229, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 4px;
+    }
+  }
+
+  .bagWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 59.2px;
+    height: 42.4px;
+  }
+
+  .bagIcon {
+    width: 33px;
+    height: 33px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    
+    .bagButton:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  .cartIndicator {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    &.hasItems { opacity: 1; }
+  }
+}
+
+// Versão compacta
+.bagContainer.smaller {
+  .bagContent { gap: 12px; }
+  .bagButton { padding: 6px; }
+  .bagWrapper { 
+    width: 44.4px; 
+    height: 31.8px; 
+  }
+  .bagIcon { 
+    width: 44.4px; 
+    height: 31.8px; 
+  }
+  .cartCount {
+    font-size: 18px;
+    min-width: 22px;
+    height: 22px;
+    padding-bottom: 1px;
+    margin-bottom: -1px;
+  }
+  .cartIndicator {
+    top: 4px;
+    right: 4px;
+    width: 5px;
+    height: 5px;
+  }
+}
+
+// Mixin para responsividade - ATUALIZADO
+@mixin responsive-header($scale, $padding: null, $max-width: null) {
+  :root {
+    --header-height: #{100px * $scale}; // 🔴 Atualiza a variável CSS
+  }
+  
+  .header {
+    height: 100px * $scale;
+    
+    &Container {
+      @if $padding { padding: 0 $padding; }
+      @if $max-width { max-width: $max-width; }
+    }
+  }
+  
+  .logoContainer .logo {
+    width: 101px * $scale;
+    height: 38px * $scale;
+  }
+  
+  .bagContainer {
+    .bagContent { gap: 16px * $scale; }
+    .bagButton { padding: 8px * $scale; }
+    .bagWrapper {
+      width: 59.2px * $scale;
+      height: 42.4px * $scale;
+    }
+    .bagIcon {
+      width: 33px * $scale;
+      height: 33px * $scale;
+    }
+    .cartCount {
+      font-size: 20px * $scale;
+      min-width: 20px * $scale;
+      height: 28px * $scale;
+      padding-bottom: 2px * $scale;
+      margin-bottom: -2px * $scale;
+      letter-spacing: -0.5px * $scale;
+    }
+    .cartIndicator {
+      top: 6px * $scale;
+      right: 6px * $scale;
+      width: 6px * $scale;
+      height: 6px * $scale;
+    }
+  }
+}
+
+// Media Queries com Mixin - ATUALIZADO
+@media (max-width: 1728px) {
+  @include responsive-header(0.94, 15px, 95%); // 🔴 Reduzido padding
+}
+
+@media (max-width: 1200px) {
+  @include responsive-header(0.85, 12px); // 🔴 Reduzido padding
+}
+
+@media (max-width: 768px) {
+  @include responsive-header(0.70, 10px); // 🔴 Reduzido padding
+}
+
+@media (max-width: 480px) {
+  @include responsive-header(0.60, 8px); // 🔴 Reduzido padding
+  
+  .bagContainer {
+    .cartIndicator { display: none; }
+    .cartCount {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  @include responsive-header(0.55, 6px); // 🔴 Reduzido padding
+  
+  .header {
+    &Container {
+      padding: 0 6px; // 🔴 Padding mínimo
+    }
+  }
+}
+
+// Modo escuro
+@media (prefers-color-scheme: dark) {
+  .header { border-bottom-color: rgba(255, 255, 255, 0.1); }
+  .bagContainer .cartCount { color: var(--text-primary-dark); }
+}
