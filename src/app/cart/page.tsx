@@ -185,7 +185,7 @@ export default function CartPage() {
             onClick={handleCheckout}
             disabled={isFinished} // Opcional: desabilita para evitar múltiplos cliques
           >
-            {isFinished ? "Compra Finalizada" : "Finalizar Compra"}
+            {isFinished ? "Compra Finalizada!" : "Finalizar Compra"}
           </button>
         </div>
       </footer>

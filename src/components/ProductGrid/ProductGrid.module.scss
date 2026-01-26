@@ -146,14 +146,17 @@ $breakpoints: (
     max-width: 345px;
   }
   
-  // Efeito hover simplificado - SEM ZOOM
+  // Efeito hover - SEM SOMBRA
   &:hover {
     border-color: rgba($primary-color, 0.5);
-    box-shadow: 0 8px 24px $shadow-color;
   }
   
   @media (max-width: map-get($breakpoints, md)) {
     border-radius: 6px;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    border-radius: 4px;
   }
   
   @media (max-width: map-get($breakpoints, xs)) {
@@ -213,19 +216,12 @@ $breakpoints: (
   z-index: 1;
   background-color: $bg-image;
   
-  // REMOVIDO o transform: scale(1.05) no hover
   .productImage {
     width: 100%;
     height: 100%;
     object-fit: contain;
     padding: 10px;
-    // Transição removida para evitar qualquer efeito de zoom
   }
-  
-  // REMOVIDO o hover que causava zoom
-  // &:hover .productImage {
-  //   transform: scale(1.05);
-  // }
   
   @media (max-width: map-get($breakpoints, lg)) {
     height: 220px;
@@ -326,10 +322,6 @@ $breakpoints: (
   line-height: 1.5;
   margin: 0 0 16px 0;
   flex-grow: 1;
-  // white-space: nowrap;
-  // overflow: hidden;
-  // text-overflow: ellipsis;
-  display: block;
   
   @media (max-width: map-get($breakpoints, md)) {
     margin-bottom: 14px;
@@ -348,7 +340,6 @@ $breakpoints: (
   }
 }
 
-// No seu arquivo de estilos (ex: ProductGrid.module.scss)
 .priceContainer {
   margin-bottom: 16px;
   
@@ -368,7 +359,7 @@ $breakpoints: (
 .priceWithIcon {
   display: flex;
   align-items: center;
-  gap: 8px; // Aumentei de 6px para 8px
+  gap: 8px;
   
   @media (max-width: map-get($breakpoints, md)) {
     gap: 7px;
@@ -384,28 +375,28 @@ $breakpoints: (
 }
 
 .ethIcon {
-  width: 29px; // Aumentado de 16px
-  height: 29px; // Aumentado de 16px
+  width: 29px;
+  height: 29px;
   display: block;
   
   @media (max-width: map-get($breakpoints, lg)) {
-    width: 18px; // Aumentado de 14px
-    height: 18px; // Aumentado de 14px
+    width: 18px;
+    height: 18px;
   }
   
   @media (max-width: map-get($breakpoints, md)) {
-    width: 16px; // Aumentado de 12px
-    height: 16px; // Aumentado de 12px
+    width: 16px;
+    height: 16px;
   }
   
   @media (max-width: map-get($breakpoints, sm)) {
-    width: 15px; // Aumentado de 11px
-    height: 15px; // Aumentado de 11px
+    width: 15px;
+    height: 15px;
   }
   
   @media (max-width: map-get($breakpoints, xs)) {
-    width: 14px; // Aumentado de 10px
-    height: 14px; // Aumentado de 10px
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -438,7 +429,7 @@ $breakpoints: (
   background: $primary-color;
   border: none;
   color: white;
-  padding: 26px 20px; // 28px 20px
+  padding: 26px 20px;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -453,15 +444,17 @@ $breakpoints: (
   gap: 8px;
   
   &:hover {
-    background: $primary-color-light;
-    // REMOVIDO transform: translateY(-2px) para evitar "movimento"
-    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+    background: #494949;
   }
   
-  // REMOVIDO :active que causava movimento
-  // &:active {
-  //   transform: translateY(0);
-  // }
+  // 🔥 ESTILO PARA BOTÃO "ADICIONADO AO CARRINHO"
+  &.added {
+    background: $primary-color-light; // Cinza
+    
+    &:hover {
+      background: $primary-color-light;
+    }
+  }
   
   @media (max-width: map-get($breakpoints, lg)) {
     padding: 18px 20px;
@@ -494,7 +487,49 @@ $breakpoints: (
   font-weight: 600;
 }
 
-// REMOVIDA a seção de orientação landscape que continha overflow hidden
+// Estilos para loading, error e empty states
+.loadingState,
+.errorState,
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: $text-secondary;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: 40px 15px;
+  }
+}
+
+.loadingSpinner {
+  border: 4px solid rgba($primary-color, 0.3);
+  border-top: 4px solid $primary-color;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+.retryButton {
+  background: $primary-color;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: $primary-color-light;
+  }
+}
 
 // Suporte para telas muito grandes (4K)
 @media (min-width: 2000px) {
@@ -530,10 +565,6 @@ $breakpoints: (
   
   .price {
     font-size: 1.75rem;
-    
-    &::before {
-      font-size: 0.875rem;
-    }
   }
   
   .buyButton {

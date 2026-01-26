@@ -1,7 +1,8 @@
 // components/ProductGrid/ProductGrid.tsx
+
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -36,6 +37,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const { addToCart } = useCart();
   const gridClass = `${styles.productGrid} ${styles[`columns${columns}`]}`;
 
+  // Estado para rastrear quais produtos foram adicionados
+  const [addedItems, setAddedItems] = useState<number[]>([]);
+
   const handleBuyClick = (product: Product) => {
     // Adiciona ao carrinho
     addToCart({
@@ -46,8 +50,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       imageUrl: product.imageUrl,
     });
 
-    // Redireciona para o carrinho
-    router.push("/cart");
+    // Adiciona o ID ao estado para mudar a aparência do botão
+    setAddedItems((prev) => [...prev, product.id]);
+
+    // Redireciona após um delay
+    setTimeout(() => {
+      router.push("/cart");
+    }, 800);
   };
 
   // Estados de carregamento/erro...
@@ -98,48 +107,64 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       {title && <h2 className={styles.sectionTitle}>{title}</h2>}
 
       <div className={gridClass}>
-        {products.map((product) => (
-          <div key={product.id} className={styles.productCard}>
-            <div className={styles.imageBackground}>
-              <div className={styles.imageWrapper}>
-                <div className={styles.imageContainer}>
-                  <img
-                    src={product.imageUrl}
-                    alt={product.title}
-                    className={styles.productImage}
-                    onError={(e) => {
-                      e.currentTarget.src = "/images/fallback-nft.png";
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+        {products.map((product) => {
+          // Verificação se o produto foi adicionado
+          const isAdded = addedItems.includes(product.id);
 
-            <div className={styles.contentContainer}>
-              <h3 className={styles.productTitle}>{product.title}</h3>
-              <p className={styles.productDescription}>{product.description}</p>
-              <div className={styles.priceContainer}>
-                <div className={styles.priceWithIcon}>
-                  {/* Adicionando a imagem/ícone do ETH */}
-                  <Image
-                    src="/images/Ellipse 770.png" // ou o caminho da sua imagem
-                    alt="ETH"
-                    width={16}
-                    height={16}
-                    className={styles.ethIcon}
-                  />
-                  <span className={styles.price}>{product.price} ETH</span>
+          return (
+            <div key={product.id} className={styles.productCard}>
+              <div className={styles.imageBackground}>
+                <div className={styles.imageWrapper}>
+                  <div className={styles.imageContainer}>
+                    {/* Substituído img por Image */}
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.title}
+                      width={300} // Defina a largura apropriada
+                      height={300} // Defina a altura apropriada
+                      className={styles.productImage}
+                      onError={(e) => {
+                        // Para o Image, usamos onError no container ou uma abordagem diferente
+                        // Como fallback mais simples
+                        e.currentTarget.src = "/images/fallback-nft.png";
+                      }}
+                      // Adicione um fallback caso o onError não funcione com Image
+                      unoptimized={true} // Caso as imagens sejam de domínio externo
+                    />
+                  </div>
                 </div>
               </div>
-              <button
-                className={styles.buyButton}
-                onClick={() => handleBuyClick(product)}
-              >
-                <span className={styles.buttonText}>COMPRAR</span>
-              </button>
+
+              <div className={styles.contentContainer}>
+                <h3 className={styles.productTitle}>{product.title}</h3>
+                <p className={styles.productDescription}>
+                  {product.description}
+                </p>
+                <div className={styles.priceContainer}>
+                  <div className={styles.priceWithIcon}>
+                    <Image
+                      src="/images/Ellipse 770.png"
+                      alt="ETH"
+                      width={16}
+                      height={16}
+                      className={styles.ethIcon}
+                    />
+                    <span className={styles.price}>{product.price}</span>
+                  </div>
+                </div>
+                <button
+                  className={`${styles.buyButton} ${isAdded ? styles.added : ""}`}
+                  onClick={() => handleBuyClick(product)}
+                  disabled={isAdded}
+                >
+                  <span className={styles.buttonText}>
+                    {isAdded ? "ADICIONADO AO CARRINHO" : "COMPRAR"}
+                  </span>
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

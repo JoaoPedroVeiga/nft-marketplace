@@ -1,13 +1,16 @@
+// components/Header/Header.tsx
 'use client';
 
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
+import { useRouter } from 'next/navigation';
 import styles from './header.module.scss';
 
 interface HeaderProps {
-  logoUrl: string;
-  bagUrl: string;
+  logoUrl?: string;
+  bagUrl?: string;
   showCartCount?: boolean;
 }
 
@@ -16,7 +19,13 @@ const Header: React.FC<HeaderProps> = ({
   bagUrl = '/images/bag.png',
   showCartCount = true,
 }) => {
-  const cartItemCount = 3; // Exemplo estático
+  const { getTotalItems } = useCart();
+  const router = useRouter();
+  const cartItemCount = getTotalItems();
+  
+  const handleBagClick = () => {
+    router.push('/cart');
+  };
   
   return (
     <header className={styles.header}>
@@ -37,7 +46,11 @@ const Header: React.FC<HeaderProps> = ({
        
         {/* Bag na direita */}
         <div className={styles.bagContainer}>
-          <button className={styles.bagButton} aria-label="Carrinho de compras">
+          <button 
+            className={styles.bagButton} 
+            onClick={handleBagClick}
+            aria-label="Carrinho de compras"
+          >
             <div className={styles.bagWrapper}>
               <Image
                 src={bagUrl}
@@ -46,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({
                 height={53}
                 className={styles.bagIcon}
               />
-              {showCartCount && cartItemCount > 0 && (
+              {showCartCount && cartItemCount > -1 && (
                 <span className={styles.cartCount}>{cartItemCount}</span>
               )}
             </div>
