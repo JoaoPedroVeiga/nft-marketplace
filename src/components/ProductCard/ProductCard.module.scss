@@ -265,23 +265,23 @@ $breakpoints: (
   display: block;
   
   @media (max-width: map-get($breakpoints, lg)) {
-    width: 18px;
-    height: 18px;
+    width: 24px; 
+    height: 24px; 
   }
   
   @media (max-width: map-get($breakpoints, md)) {
-    width: 16px;
-    height: 16px;
+    width: 22px; 
+    height: 22px; 
   }
   
   @media (max-width: map-get($breakpoints, sm)) {
-    width: 15px;
-    height: 15px;
+    width: 20px; 
+    height: 20px; 
   }
   
   @media (max-width: map-get($breakpoints, xs)) {
-    width: 14px;
-    height: 14px;
+    width: 18px; 
+    height: 18px; 
   }
 }
 

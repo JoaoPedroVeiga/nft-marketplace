@@ -74,7 +74,7 @@ export default function NFTDetailClient({
     <div className={styles.container}>
       <button className={styles.backButton} onClick={handleBack}>
         <Image
-          src="/images/Arrow - Left.png"
+          src="/images/arrow-left.png"
           alt="Voltar"
           width={20}
           height={20}
@@ -124,7 +124,7 @@ export default function NFTDetailClient({
           <div className={styles.priceSection}>
             <div className={styles.priceContainer}>
               <Image
-                src="/images/Ellipse 770.png"
+                src="/images/ellipse-770.png"
                 alt="ETH"
                 width={24}
                 height={24}

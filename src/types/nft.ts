@@ -76,6 +76,7 @@ export interface LoadMoreProps {
   hasMore: boolean;
   onLoad: () => void;
   progress: number;
+  isLoading: boolean;
 }
 
 // ==================== HOOKS TYPES ====================

@@ -80,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className={styles.priceContainer}>
           <div className={styles.priceWithIcon}>
             <Image
-              src="/images/Ellipse 770.png"
+              src="/images/ellipse-770.png"
               alt="ETH"
               width={16}
               height={16}

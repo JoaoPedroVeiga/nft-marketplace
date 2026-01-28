@@ -33,7 +33,7 @@ export default function CartPage() {
         <header>
           <button className={styles.backButton} onClick={handleBack}>
             <Image
-              src="/images/Arrow - Left.png"
+              src="/images/arrow-left.png"
               alt="Voltar"
               width={20}
               height={20}
@@ -65,7 +65,7 @@ export default function CartPage() {
       <header>
         <button className={styles.backButton} onClick={handleBack}>
           <Image
-            src="/images/Arrow - Left.png"
+            src="/images/arrow-left.png"
             alt="Voltar"
             width={24}
             height={24}
@@ -102,7 +102,7 @@ export default function CartPage() {
 
               <div className={styles.price}>
                 <Image
-                  src="/images/Ellipse 770.png"
+                  src="/images/ellipse-770.png"
                   alt="ETH"
                   width={16}
                   height={16}
@@ -131,7 +131,7 @@ export default function CartPage() {
               onClick={() => removeFromCart(item.id)}
             >
               <Image
-                src="/images/Delete.png"
+                src="/images/delete.png"
                 alt="Remover"
                 width={20}
                 height={20}
@@ -147,7 +147,7 @@ export default function CartPage() {
           <span>TOTAL </span>
           <span className={styles.ethPrice}>
             <Image
-              src="/images/Ellipse 770.png"
+              src="/images/ellipse-770.png"
               alt="ETH"
               width={16}
               height={16}
