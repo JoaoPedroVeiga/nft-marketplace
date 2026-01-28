@@ -1,15 +1,16 @@
-// app/cart/page.tsx
 "use client";
 
-import styles from "../../styles/Cart.module.scss";
+import styles from "./Cart.module.scss";
 import { useRouter } from "next/navigation";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "@/hooks/useCart";
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, getTotal, clearCart } =
     useCart();
-  const [isFinished, setIsFinished] = useState(false); // 2. Crie o estado
+  const [isFinished, setIsFinished] = useState(false);
   const router = useRouter();
   const total = getTotal();
 
@@ -18,9 +19,7 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
-    setIsFinished(true); // 3. Muda o estado para true ao clicar
-
-    // Pequeno delay para o usuário ver a mudança antes do alert/redirecionamento
+    setIsFinished(true);
     setTimeout(() => {
       alert(`Compra finalizada! Total: ${total.toFixed(2)} ETH`);
       clearCart();
@@ -33,48 +32,26 @@ export default function CartPage() {
       <div className={styles.cartPage}>
         <header>
           <button className={styles.backButton} onClick={handleBack}>
-          {/* ÍCONE DE VOLTAR SUBSTITUÍDO */}
-          <img 
-            src="/images/Arrow - Left.png" 
-            alt="Voltar" 
-            className={styles.backIcon} 
-          />
-        </button>
+            <Image
+              src="/images/Arrow - Left.png"
+              alt="Voltar"
+              width={20}
+              height={20}
+              className={styles.backIcon}
+            />
+          </button>
           <h1>Mochila de Compras</h1>
         </header>
 
-        <div
-          style={{
-            textAlign: "center",
-            padding: "60px 20px",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "60px",
-              marginBottom: "20px",
-              color: "#666",
-            }}
-          >
-            🛒
-          </div>
-          <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
-            Seu carrinho está vazio
-          </h2>
-          <p style={{ color: "#888", marginBottom: "30px" }}>
+        <div className={styles.emptyCart}>
+          <div className={styles.emptyCartEmoji}>🛒</div>
+          <h2 className={styles.emptyCartTitle}>Seu carrinho está vazio</h2>
+          <p className={styles.emptyCartMessage}>
             Adicione itens incríveis ao seu carrinho!
           </p>
           <button
+            className={styles.continueShoppingBtn}
             onClick={handleBack}
-            style={{
-              background: "#ff8c00",
-              color: "#000",
-              border: "none",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              cursor: "pointer",
-            }}
           >
             Continuar Comprando
           </button>
@@ -87,11 +64,12 @@ export default function CartPage() {
     <div className={styles.cartPage}>
       <header>
         <button className={styles.backButton} onClick={handleBack}>
-          {/* ÍCONE DE VOLTAR SUBSTITUÍDO */}
-          <img 
-            src="/images/Arrow - Left.png" 
-            alt="Voltar" 
-            className={styles.backIcon} 
+          <Image
+            src="/images/Arrow - Left.png"
+            alt="Voltar"
+            width={24}
+            height={24}
+            className={styles.backIcon}
           />
         </button>
         <h1>Mochila de Compras</h1>
@@ -100,10 +78,12 @@ export default function CartPage() {
       <div className={styles.cartList}>
         {items.map((item) => (
           <div key={item.id} className={styles.cartItem}>
-            <div className={styles.itemImage}>
-              <img
+            <Link href={`/nft/${item.id}`} className={styles.itemImage}>
+              <Image
                 src={item.imageUrl}
                 alt={item.name}
+                width={100}
+                height={100}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -114,17 +94,18 @@ export default function CartPage() {
                   e.currentTarget.src = "/images/fallback-nft.png";
                 }}
               />
-            </div>
+            </Link>
 
             <div className={styles.itemDetails}>
               <h3>{item.name}</h3>
               <p>{item.description}</p>
 
               <div className={styles.price}>
-                {/* ÍCONE ETH SUBSTITUÍDO POR IMAGEM */}
-                <img
+                <Image
                   src="/images/Ellipse 770.png"
                   alt="ETH"
+                  width={16}
+                  height={16}
                   className={styles.currencyIcon}
                 />
                 {item.price}
@@ -149,10 +130,11 @@ export default function CartPage() {
               className={styles.removeBtn}
               onClick={() => removeFromCart(item.id)}
             >
-              {/* ÍCONE LIXEIRA SUBSTITUÍDO POR IMAGEM */}
-              <img
+              <Image
                 src="/images/Delete.png"
                 alt="Remover"
+                width={20}
+                height={20}
                 className={styles.trashIcon}
               />
             </button>
@@ -164,26 +146,22 @@ export default function CartPage() {
         <div className={styles.totalRow}>
           <span>TOTAL </span>
           <span className={styles.ethPrice}>
-            <img
+            <Image
               src="/images/Ellipse 770.png"
               alt="ETH"
+              width={16}
+              height={16}
               className={styles.currencyIcon}
             />
             {total.toFixed(2)} ETH
           </span>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            marginTop: "20px",
-          }}
-        >
+        <div className={styles.checkoutBtnContainer}>
           <button
             className={styles.checkoutBtn}
             onClick={handleCheckout}
-            disabled={isFinished} // Opcional: desabilita para evitar múltiplos cliques
+            disabled={isFinished}
           >
             {isFinished ? "Compra Finalizada!" : "Finalizar Compra"}
           </button>

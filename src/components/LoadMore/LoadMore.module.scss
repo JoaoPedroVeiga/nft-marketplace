@@ -1,12 +1,11 @@
-// components/LoadMore/LoadMore.module.scss
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   width: 100%;
-  max-width: 350px; // Largura aproximada da imagem que você enviou
-  margin: 60px auto; // 60px de espaço no topo/fundo e centraliza nas laterais
+  max-width: 350px; 
+  margin: 60px auto; 
   padding: 20px;
 }
 
@@ -42,6 +41,6 @@
   &:disabled {
     opacity: 0.7;
     cursor: default;
-    color: #999; // Cor de texto mais apagada quando "já viu tudo"
+    color: #999; 
   }
 }

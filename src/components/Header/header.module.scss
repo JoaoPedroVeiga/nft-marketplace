@@ -1,5 +1,4 @@
-// Variáveis de design system - ADICIONE ESTA LINHA NO TOPO
-$dark-color: #232323; // 🔴 Adicionado aqui
+$dark-color: #232323; 
 
 :root {
   --primary-color: #4F46E5;
@@ -7,7 +6,7 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   --text-primary: #1F2937;
   --text-primary-dark: #F9FAFB;
   --border-color: rgba(0, 0, 0, 0.1);
-  --header-height: 100px; // 🔴 Variável para altura do header
+  --header-height: 100px; 
 }
 
 .header {
@@ -15,11 +14,11 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--header-height); // 🔴 Usando variável
+  height: var(--header-height); 
   border-bottom: 1px solid var(--border-color);
   z-index: 1000;
   backdrop-filter: blur(10px);
-  background-color: rgba($dark-color, 0.9); // 🔴 Agora funciona!
+  background-color: rgba($dark-color, 0.9); 
 
   &Container {
     width: 100%;
@@ -32,7 +31,6 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   }
 }
 
-// Logo Container
 .logoContainer {
   display: flex;
   align-items: center;
@@ -57,7 +55,6 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   }
 }
 
-// Bag Container
 .bagContainer {
   display: flex;
   align-items: center;
@@ -139,7 +136,6 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   }
 }
 
-// Versão compacta
 .bagContainer.smaller {
   .bagContent { gap: 12px; }
   .bagButton { padding: 6px; }
@@ -166,10 +162,9 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   }
 }
 
-// Mixin para responsividade - ATUALIZADO
 @mixin responsive-header($scale, $padding: null, $max-width: null) {
   :root {
-    --header-height: #{100px * $scale}; // 🔴 Atualiza a variável CSS
+    --header-height: #{100px * $scale}; 
   }
   
   .header {
@@ -214,21 +209,20 @@ $dark-color: #232323; // 🔴 Adicionado aqui
   }
 }
 
-// Media Queries com Mixin - ATUALIZADO
 @media (max-width: 1728px) {
-  @include responsive-header(0.94, 15px, 95%); // 🔴 Reduzido padding
+  @include responsive-header(0.94, 15px, 95%); 
 }
 
 @media (max-width: 1200px) {
-  @include responsive-header(0.85, 12px); // 🔴 Reduzido padding
+  @include responsive-header(0.85, 12px); 
 }
 
 @media (max-width: 768px) {
-  @include responsive-header(0.70, 10px); // 🔴 Reduzido padding
+  @include responsive-header(0.70, 10px); 
 }
 
 @media (max-width: 480px) {
-  @include responsive-header(0.60, 8px); // 🔴 Reduzido padding
+  @include responsive-header(0.60, 8px); 
   
   .bagContainer {
     .cartIndicator { display: none; }
@@ -240,16 +234,15 @@ $dark-color: #232323; // 🔴 Adicionado aqui
 }
 
 @media (max-width: 360px) {
-  @include responsive-header(0.55, 6px); // 🔴 Reduzido padding
+  @include responsive-header(0.55, 6px); 
   
   .header {
     &Container {
-      padding: 0 6px; // 🔴 Padding mínimo
+      padding: 0 6px; 
     }
   }
 }
 
-// Modo escuro
 @media (prefers-color-scheme: dark) {
   .header { border-bottom-color: rgba(255, 255, 255, 0.1); }
   .bagContainer .cartCount { color: var(--text-primary-dark); }

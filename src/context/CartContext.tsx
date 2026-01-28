@@ -1,26 +1,8 @@
-// context/CartContext.tsx
 'use client';
 
+import { CartContextType, CartItem } from '@/types/nft';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface CartItem {
-  id: number;
-  name: string;
-  description: string;
-  price: string; // Formato: "182 ETH"
-  imageUrl: string;
-  quantity: number;
-}
-
-interface CartContextType {
-  items: CartItem[];
-  addToCart: (product: Omit<CartItem, 'quantity'>) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, quantity: number) => void;
-  clearCart: () => void;
-  getTotal: () => number;
-  getTotalItems: () => number;
-}
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -32,14 +14,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const existingItem = prevItems.find(item => item.id === product.id);
       
       if (existingItem) {
-        // Se já existe, incrementa quantidade
         return prevItems.map(item =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // Se não existe, adiciona novo item
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });

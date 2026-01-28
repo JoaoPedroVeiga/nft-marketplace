@@ -1,17 +1,12 @@
-// hooks/useProducts.ts
 import { useQuery } from '@tanstack/react-query';
-import { getProducts, ProductResponse } from '@/services/api';
+import { getProducts } from '@/services/api';
+import { ProductResponse, UseProductsOptions } from '@/types/nft';
 
-interface UseProductsOptions {
-  page?: number;
-  rows?: number;
-  sortBy?: 'id' | 'name' | 'brand' | 'price';
-  orderBy?: 'ASC' | 'DESC';
-}
+
 
 export function useProducts({
   page = 1,
-  rows = 8,  // Padrão 8 para grid 2x4
+  rows = 8,  
   sortBy = 'name',
   orderBy = 'ASC'
 }: UseProductsOptions = {}) {

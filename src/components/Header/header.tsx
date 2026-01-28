@@ -1,18 +1,14 @@
-// components/Header/Header.tsx
 'use client';
 
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCart } from '@/context/CartContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useCart } from '@/hooks/useCart';
 import { useRouter } from 'next/navigation';
 import styles from './header.module.scss';
+import { HeaderProps } from '@/types/nft';
 
-interface HeaderProps {
-  logoUrl?: string;
-  bagUrl?: string;
-  showCartCount?: boolean;
-}
 
 const Header: React.FC<HeaderProps> = ({
   logoUrl = '/images/logo-1.png',
@@ -30,7 +26,6 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
-        {/* Logo na esquerda */}
         <div className={styles.logoContainer}>
           <Link href="/" className={styles.logoLink}>
             <Image
@@ -44,12 +39,14 @@ const Header: React.FC<HeaderProps> = ({
           </Link>
         </div>
        
-        {/* Bag na direita */}
         <div className={styles.bagContainer}>
-          <button 
-            className={styles.bagButton} 
+          <motion.button
+            className={styles.bagButton}
             onClick={handleBagClick}
             aria-label="Carrinho de compras"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <div className={styles.bagWrapper}>
               <Image
@@ -59,11 +56,22 @@ const Header: React.FC<HeaderProps> = ({
                 height={53}
                 className={styles.bagIcon}
               />
-              {showCartCount && cartItemCount > -1 && (
-                <span className={styles.cartCount}>{cartItemCount}</span>
-              )}
+              <AnimatePresence mode="wait">
+                {showCartCount && cartItemCount > 0 && (
+                  <motion.span
+                    className={styles.cartCount}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    key={cartItemCount}
+                  >
+                    {cartItemCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </div>
-          </button>
+          </motion.button>
         </div>
       </div>
     </header>

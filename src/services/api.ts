@@ -1,4 +1,4 @@
-// services/api.ts
+import { PaginationParams, ProductResponse, ApiProduct } from '@/types/nft';
 import axios from 'axios';
 
 export const api = axios.create({
@@ -9,29 +9,6 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-// Tipos baseados na resposta real
-export interface ApiProduct {
-  id: number;
-  name: string;
-  description: string;      // Existe na API!
-  image: string;           // Campo é 'image' (não 'imageUrl')
-  price: string;           // String! "182.00000000"
-  createdAt: string;
-  // NOTA: Não há campo 'brand' na resposta real!
-}
-
-export interface ProductResponse {
-  products: ApiProduct[];  // Array em 'products' (não 'data')
-  count: number;           // Total de produtos
-}
-
-export interface PaginationParams {
-  page: number;
-  rows: number;
-  sortBy: 'id' | 'name' | 'brand' | 'price';
-  orderBy: 'ASC' | 'DESC';
-}
 
 export async function getProducts({ 
   page = 1, 
@@ -47,21 +24,19 @@ export async function getProducts({
     orderBy
   };
   
-  console.log('📡 API Request Params:', params);
-  
   try {
     const response = await api.get<ProductResponse>('/', { params });
-    console.log('✅ API Response:', {
-      totalProducts: response.data.count,
-      productsCount: response.data.products?.length || 0
-    });
     return response.data;
-  } catch (error: any) {
-    console.error('❌ API Error:', {
-      message: error.message,
-      status: error.response?.status,
-      data: error.response?.data
-    });
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getProductById(id: number): Promise<ApiProduct> {
+  try {
+    const response = await api.get<ApiProduct>(`/${id}`);
+    return response.data;
+  } catch (error) {
     throw error;
   }
 }
