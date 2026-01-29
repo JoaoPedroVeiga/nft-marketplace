@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import LoadMore from "@/components/LoadMore/LoadMore";
 import ProductGrid from "@/components/ProductGrid/ProductGrid";
 import { useProducts } from "@/hooks/useProduct";
-import { ProductResponse } from "@/types/nft";
+import { ProductResponse, ApiProduct } from "@/types/nft";
 
 interface ProductGridClientProps {
   initialData: ProductResponse;
@@ -19,6 +19,11 @@ export default function ProductGridClient({
   const [rows] = useState(8);
   const [sortBy] = useState<"id" | "name" | "brand" | "price">("name");
   const [orderBy] = useState<"ASC" | "DESC">("ASC");
+  
+  // Estado para acumular os produtos carregados
+  const [accumulatedProducts, setAccumulatedProducts] = useState<ApiProduct[]>(
+    initialData.products || []
+  );
 
   const { data, isLoading, isError, error } = useProducts({
     page,
@@ -27,6 +32,26 @@ export default function ProductGridClient({
     orderBy,
   });
 
+  // Efeito para concatenar novos produtos quando uma nova página é carregada
+  useEffect(() => {
+    if (data?.products && page > initialPage) {
+      setAccumulatedProducts(prev => {
+        // Evitar duplicação baseando-se no id dos produtos
+        const existingIds = new Set(prev.map(product => product.id));
+        const newProducts = data.products.filter(
+          product => !existingIds.has(product.id)
+        );
+        
+        // Se não houver novos produtos, retornar a lista atual
+        if (newProducts.length === 0) return prev;
+        
+        // Concatenar os novos produtos
+        return [...prev, ...newProducts];
+      });
+    }
+  }, [data, page, initialPage]);
+
+  // Determinar qual dado usar para progresso e contagem total
   const currentData = page === initialPage ? initialData : data;
 
   const [progress, setProgress] = useState(0.4);
@@ -47,14 +72,18 @@ export default function ProductGridClient({
     }
   };
 
-  const products =
-    currentData?.products?.map((item) => ({
-      id: item.id,
-      title: item.name,
-      description: item.description,
-      price: `${parseFloat(item.price).toFixed(0)} ETH`,
-      imageUrl: item.image,
-    })) || [];
+  // Transformar os produtos acumulados para o formato esperado pelo ProductGrid
+  const products = useMemo(
+    () =>
+      accumulatedProducts.map((item) => ({
+        id: item.id,
+        title: item.name,
+        description: item.description,
+        price: `${parseFloat(item.price).toFixed(0)} ETH`,
+        imageUrl: item.image,
+      })),
+    [accumulatedProducts]
+  );
 
   return (
     <>
